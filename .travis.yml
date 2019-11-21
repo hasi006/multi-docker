@@ -1,0 +1,26 @@
+sudo: required
+
+services:
+  - docker
+
+before_install:
+  - docker build -t multidocker/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true multidocker/react-test npm run test
+
+after_success:
+  - docker build -t hasiya/multi-client ./client
+  - docker build -t hasiya/multi-nginx ./nginx
+  - docker build -t hasiya/multi-server ./server
+  - docker build -t hasiya/multi-worker ./worker
+
+#Accesing Docker Hub
+
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+
+#pushing images into docker
+  - docker push hasiya/multi-client
+  - docker push hasiya/multi-nginx
+  - docker push hasiya/multi-server
+  - docker push hasiya/multi-worker
