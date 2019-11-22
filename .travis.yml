@@ -10,17 +10,17 @@ script:
   - docker run -e CI=true multidocker/react-test npm run test
 
 after_success:
-  - docker build -t hasiya/multi-client ./client
-  - docker build -t hasiya/multi-nginx ./nginx
-  - docker build -t hasiya/multi-server ./server
-  - docker build -t hasiya/multi-worker ./worker
+  - docker build -t hasiyadoc/multi-client ./client
+  - docker build -t hasiyadoc/multi-nginx ./nginx
+  - docker build -t hasiyadoc/multi-server ./server
+  - docker build -t hasiyadoc/multi-worker ./worker
 
 #Accesing Docker Hub
 
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
 
 #pushing images into docker
-  - docker push hasiya/multi-client
-  - docker push hasiya/multi-nginx
-  - docker push hasiya/multi-server
-  - docker push hasiya/multi-worker
+  - docker push hasiyadoc/multi-client
+  - docker push hasiyadoc/multi-nginx
+  - docker push hasiyadoc/multi-server
+  - docker push hasiyadoc/multi-worker
