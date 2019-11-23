@@ -24,3 +24,15 @@ after_success:
   - docker push hasiyadoc/multi-nginx
   - docker push hasiyadoc/multi-server
   - docker push hasiyadoc/multi-worker
+
+deploy:
+  provider: elasticbeanstalk
+  region: ap-southeast-1
+  app: multi-docker
+  env: MultiDocker-env
+  bucket_name: elasticbeanstalk-ap-southeast-1-691488653072
+  bucket_path: docker-multi
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_ACCESS_SECRET
